@@ -8,9 +8,11 @@ process.sh  only lightly filter the outpout to do a basic plot.
 
 ## Jar file
 The jar file contains the BitpeerParser class which does the same as process3.sh but imensely faster.
-run it with `java -cp bitpeerParser.jar BitpeerParser result2.txt`
+run it with `java -cp bitpeerParser.jar BitpeerParser sample/result.txt`
 It will print a log message every now and then to give you an idea of the progress.
 
 Once it is done you can plot the result : 
 `gnuplot gnuplotXX` where `gnuplotXX` here the file created by the java script. Delete the temporary file afterward (`gnuplotXX` and `dataXX`)
 
+Example output : 
+![alt text](sample/gnuplot2.jpg)
