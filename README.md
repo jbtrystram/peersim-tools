@@ -1,12 +1,14 @@
 # peersim-tools
 A few tools to play with peersim outpout
 
-## bash scripts Scripts 
+## Bash scripts Scripts 
+
 The bash scripts parse the outpout of the bitpeer simulator (run peersim and redirect the outpout in a file. Then parse it with the script)
 process2.sh and process3.sh do the same thing, only process3 is a bit faster (still slow)
 process.sh  only lightly filter the outpout to do a basic plot.
 
 ## Jar file
+
 The jar file contains the BitpeerParser class which does the same as process3.sh but imensely faster.
 run it with `java -cp bitpeerParser.jar BitpeerParser sample/result.txt`
 It will print a log message every now and then to give you an idea of the progress.
