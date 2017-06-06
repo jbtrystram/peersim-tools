@@ -85,7 +85,7 @@ public class BitpeerParser {
         "set style histogram rowstacked",
         "set xtics autofreq 0, 10",
 
-        "plot 'data"+pid+"' using 2 with histogram, using 3 with histogram, 'data"+
+        "plot 'data"+pid+"' using 2 with histogram, \'\' using 3 with histogram, 'data"+
                 pid+"' using 4 with lines lw 2 title 'Active Peers'");
 
         Path gnuplotFile = Paths.get("gnuplot"+pid);
