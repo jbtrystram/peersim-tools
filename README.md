@@ -18,3 +18,8 @@ Once it is done you can plot the result :
 
 Example output : 
 ![alt text](sample/gnuplot2.jpg)
+
+
+## Gnuplots scripts
+
+Awesome scripts to get fancy outputs and animated gifs FTW
