@@ -1,0 +1,12 @@
+set terminal jpeg
+set output 'gnuplot2.jpg'
+set title ' Seeders / Leechers '
+set key invert reverse Left outside
+set key autotitle columnheader
+set xlabel ' Temps '
+set ylabel ' Total Peers '
+set boxwidth 1.25
+set style fill solid border -1 
+set style histogram rowstacked
+set xtics autofreq 0, 10
+plot 'data51' using 2 with histogram, '' using 3 with histogram, 'data51' using 4 with lines lw 2 title 'Active Peers'
