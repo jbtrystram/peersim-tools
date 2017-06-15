@@ -246,8 +246,8 @@ public class NetworkDynamics implements Control {
 		int oldY=((BitTorrent)(Network.get(nodeIndex).getProtocol(pid))).getThisNodeCoordY();
 		int oldX=((BitTorrent)(Network.get(nodeIndex).getProtocol(pid))).getThisNodeCoordX();
 		Random ran = new Random();
-		int newX = ran.nextInt(5);
-		int newY = ran.nextInt(5);
+		int newX = ran.nextInt(10) - 5;
+		int newY = ran.nextInt(10) - 5;
 		Node nodeToMove = Network.move(nodeIndex,newX,newY);
 		if ( ((BitTorrent)tracker.getProtocol(pid)).moveNeighbor(nodeToMove)){
 			//nodeIndex = CommonState.r.nextInt(Network.size());
@@ -266,7 +266,7 @@ public class NetworkDynamics implements Control {
 	 * @return always false
 	 */
 	public boolean execute(){
-		int choice = (CommonState.r.nextInt(2)); // 0 or 1
+		int choice = (CommonState.r.nextInt(8)); // 0 or 1 or more
 
 		for (int j=0; j<=Network.size()-1;j++){
 			if(((BitTorrent)(Network.get(j).getProtocol(pid))).getNodeMobility()){
@@ -292,7 +292,7 @@ public class NetworkDynamics implements Control {
 			}
 		}
 		// removing existing nodes
-		else {
+		else if(choice == 1){
 			if (Network.size() - this.remove < minsize) {
 				////By vincent System.out.println("DYN: " + (Network.size() - minsize) + " nodes will be removed.");
 				remove(Network.size() - minsize);
@@ -300,6 +300,15 @@ public class NetworkDynamics implements Control {
 			else {
 				////By vincent System.out.println("DYN: " + this.remove + " nodes will be removed.");
 				remove(this.remove);
+			}
+		} else {
+			// find a node and randomly toggle its state between OK and DOWN
+			int toggledNode = CommonState.r.nextInt(Network.size());
+			if(Network.node[toggledNode] != null
+			&& Network.node[toggledNode].getFailState() != Fallible.DEAD){
+				Network.node[toggledNode].setFailState(
+					Network.node[toggledNode].getFailState() == Fallible.OK ? Fallible.DOWN : Fallible.OK
+				);
 			}
 		}
 		return false;

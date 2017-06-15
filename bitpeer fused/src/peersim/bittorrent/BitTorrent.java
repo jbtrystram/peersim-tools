@@ -505,6 +505,12 @@ public class BitTorrent implements EDProtocol {
 
 		Object ev;
 		long latency;
+
+		if(node != null && node.getFailState() != Fallible.OK)
+			return;
+
+		try{
+
 		switch(((SimpleEvent)event).getType()){
 
 			case KEEP_ALIVE: // 1
@@ -1257,6 +1263,9 @@ public class BitTorrent implements EDProtocol {
 			}; break;
 
 		}
+	}catch(Exception e){
+		System.err.println(e);
+	}
 	}
 
 	/**

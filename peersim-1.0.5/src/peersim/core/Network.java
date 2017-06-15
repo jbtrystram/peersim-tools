@@ -84,7 +84,7 @@ private static final String PAR_SIZE = "network.size";
 * it is necessary to know that the actual node set is only the first
 * {@link #size()} items of the array.
 */
-static Node[] node = null;
+public static Node[] node = null;
 
 /**
 * Actual size of the network.
