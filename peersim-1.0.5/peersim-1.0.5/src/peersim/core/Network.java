@@ -84,7 +84,7 @@ private static final String PAR_SIZE = "network.size";
 * it is necessary to know that the actual node set is only the first
 * {@link #size()} items of the array.
 */
-public static Node[] node = null;
+static Node[] node = null;
 
 /**
 * Actual size of the network.
@@ -201,8 +201,6 @@ public static void add( Node n ) {
 	node[len] = n;
 	n.setIndex(len);
 	len++;
-
-
 }
 
 // ------------------------------------------------------------------
@@ -226,7 +224,6 @@ public static Node get( int index ) {
 * It also sets the fail state of the node to {@link Fallible#DEAD}.
 */
 public static Node remove() {
-	System.out.println("Removing node aahhh ------------------ ");
 
 	Node n = node[len-1]; // if len was zero this throws and exception
 	node[len-1]=null;
@@ -267,7 +264,27 @@ public static void swap(int i, int j) {
 }
 
 // ------------------------------------------------------------------
+// ------------------------------------------------------------------
 
+/**
+* The node with the given index is moved. Returns the moved node.
+* It also sets the fail state of the node to {@link Fallible#DEAD}.
+* <p>Look out: the index of the other nodes will not change (the right
+* hand side of the list is not shifted to the left) except that of the last
+* node. Only the
+* last node is moved to the given position and will get index i.
+*/
+public static Node move(int i, int x, int y ) {
+	//System.out.println("Avant: "+node[i].getCoordX());
+	if( i<0 || i>=len ) throw new IndexOutOfBoundsException(""+i);
+	node[i].setCoordX(node[i].getCoordX()+x);
+	node[i].setCoordY(node[i].getCoordY()+y);
+	//System.out.println("Après: "+node[i].getCoordX());
+
+	return node[i];
+}
+
+// ------------------------------------------------------------------
 /**
 * Shuffles the node array. The index of each node is updated accordingly.
 */

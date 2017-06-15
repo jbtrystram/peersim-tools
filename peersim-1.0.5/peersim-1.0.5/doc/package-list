@@ -1,3 +1,8 @@
+example.aggregation
+example.edaggregation
+example.hot
+example.loadbalance
+example.newscast
 peersim
 peersim.cdsim
 peersim.config
