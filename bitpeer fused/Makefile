@@ -13,7 +13,10 @@ doc:
 run:
 	java -cp $(LIB_JARS):classes peersim.Simulator config-BitTorrent.cfg
 
-all: compile doc run
+all: compile doc run core
 
 clean: 
 	rm -fr classes doc
+core:
+	make -C peersim-1.0.5/ release
+	cp peersim-1.0.5/peersim-1.0.5/peersim-1.0.5.jar lib/
