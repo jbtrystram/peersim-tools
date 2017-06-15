@@ -266,7 +266,7 @@ public class NetworkDynamics implements Control {
 	 * @return always false
 	 */
 	public boolean execute(){
-		int choice = (CommonState.r.nextInt(8)); // 0 or 1 or more
+		int choice = (CommonState.r.nextInt(11)); // 0 or 1 or more
 
 		for (int j=0; j<=Network.size()-1;j++){
 			if(((BitTorrent)(Network.get(j).getProtocol(pid))).getNodeMobility()){

@@ -30,7 +30,12 @@ NMAX=STATS_blocks
 do for [n=0:NMAX] {
     ofname=sprintf("%d.png", n)
     set output ofname
-    plot datafile index n using 1:2:3 with points pointtype 7 lt palette
+	# set variable point labels
+	# plot 'test.data' using 2:1:(symbol($3)) with labels textcolor lt 1
+    plot datafile index n using 1:2:($4==0?$3:1/0) with points pointtype 7 lt palette,\
+	"" index n using 1:2:($4==1?$3:1/0) with points pointtype 9 lt palette,\
+	"" index n using 1:2:($4==2?$3:1/0) with points pointtype 5 lt palette
+
 }
 
 set terminal x11
