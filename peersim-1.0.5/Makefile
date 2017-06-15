@@ -27,7 +27,7 @@ doc:
 		example.loadbalance \
 		example.edaggregation \
 		example.hot \
-		example.newscast
+		example.newscast 
 
 docnew:
 	rm -rf doc/*
@@ -50,7 +50,7 @@ docnew:
 		example.loadbalance \
 		example.hot \
 		example.edaggregation \
-		example.newscast
+		example.newscast 
 
 
 release: clean all docnew

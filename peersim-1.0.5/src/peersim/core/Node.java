@@ -34,7 +34,7 @@ public interface Node extends Fallible, Cloneable
 public static final String PAR_PROT = "protocol";
 
 /**
- * Returns the <code>i</code>-th protocol in this node. If <code>i</code> 
+ * Returns the <code>i</code>-th protocol in this node. If <code>i</code>
  * is not a valid protocol id
  * (negative or larger than or equal to the number of protocols), then it throws
  * IndexOutOfBoundsException.
@@ -69,15 +69,19 @@ public int getIndex();
 * during the entire simulation, that is, there will be no different Node
 * objects with the same ID in the system during one invocation of the JVM.
 * Preferably nodes
-* should implement <code>hashCode()</code> based on this ID. 
+* should implement <code>hashCode()</code> based on this ID.
 */
 public long getID();
-
 /**
  * Clones the node. It is defined as part of the interface
  * to change the access right to public and to get rid of the
- * <code>throws</code> clause. 
+ * <code>throws</code> clause.
  */
 public Object clone();
 
+public int getCoordX();
+public int getCoordY();
+
+public void setCoordX(int x);
+public void setCoordY(int y);
 }
