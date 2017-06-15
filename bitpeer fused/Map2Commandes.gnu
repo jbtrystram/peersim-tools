@@ -15,8 +15,6 @@
 
 #etc...
 reset
-
-datafile = 'testDufRen.dat'
 stats datafile
 
 set title "Network instant t"
