@@ -27,7 +27,7 @@ import peersim.config.*;
 import peersim.core.*;
 import peersim.transport.*;
 import peersim.edsim.*;
-
+import java.util.Random;
 
 /**
  *	This {@link Control} can change the size of networks by adding and removing
@@ -81,6 +81,7 @@ public class NetworkDynamics implements Control {
 	 * @config
 	 */
 	private static final String PAR_REMOVE="remove";
+
 
 	/*
 	 *	The following are local variables, obtained from config property.
@@ -145,7 +146,7 @@ public class NetworkDynamics implements Control {
 				 * Initialize the new node using the NodeInitializer class;
 				 * this it the same as init.initialize(Network.get(Network.size()-1));
 				 */
-				init.initialize(nodeToBeAdded, 2);
+				init.initialize(nodeToBeAdded, 2, false);
 
 				/*
 				 * The new node sends a TRACKER message to the tracker, asking for
@@ -238,6 +239,27 @@ public class NetworkDynamics implements Control {
 		}
 	}
 
+	//By Vincent
+	protected void move(int n){
+		// the index of the node to move
+		int nodeIndex=n;
+		int oldY=((BitTorrent)(Network.get(nodeIndex).getProtocol(pid))).getThisNodeCoordY();
+		int oldX=((BitTorrent)(Network.get(nodeIndex).getProtocol(pid))).getThisNodeCoordX();
+		Random ran = new Random();
+		int newX = ran.nextInt(5);
+		int newY = ran.nextInt(5);
+		Node nodeToMove = Network.move(nodeIndex,newX,newY);
+		if ( ((BitTorrent)tracker.getProtocol(pid)).moveNeighbor(nodeToMove)){
+			//nodeIndex = CommonState.r.nextInt(Network.size());
+			// then remove it from the tracker's cache, if it is possible (= the tracker is up);
+			if (tracker.isUp()) {
+				((BitTorrent)(Network.get(nodeIndex).getProtocol(pid))).setThisNodeCoordY(oldY+newY);
+				((BitTorrent)(Network.get(nodeIndex).getProtocol(pid))).setThisNodeCoordX(oldX+newX);
+			}
+		}
+			//System.out.print("Coucou, je suis le tracker et j'ai bien vu qu'un noeud a bougé");
+			////By vincent System.out.println("DYN: A node has been removed from the network.");
+	}
 	/**
 	 * Calls {@link #add(int)} or {@link #remove} with the parameters defined by the
 	 * configuration.
@@ -245,6 +267,12 @@ public class NetworkDynamics implements Control {
 	 */
 	public boolean execute(){
 		int choice = (CommonState.r.nextInt(2)); // 0 or 1
+
+		for (int j=0; j<=Network.size()-1;j++){
+			if(((BitTorrent)(Network.get(j).getProtocol(pid))).getNodeMobility()){
+				move(j);
+			}
+		}
 
 		// adding new nodes
 		if (choice == 0) {
@@ -255,12 +283,10 @@ public class NetworkDynamics implements Control {
 			 * will be added.
 			 */
 			if (Network.size() + this.add > maxSize) {
-				//Edit vincent
 				////By vincent System.out.println("DYN: " + (maxSize - Network.size()) + " nodes will be added.");
 				add(maxSize - Network.size());
 			}
 			else {
-				//Edit vincent
 				////By vincent System.out.println("DYN: " + this.add + " nodes will be added.");
 				add(this.add);
 			}
@@ -268,12 +294,10 @@ public class NetworkDynamics implements Control {
 		// removing existing nodes
 		else {
 			if (Network.size() - this.remove < minsize) {
-				//Edit vincent
 				////By vincent System.out.println("DYN: " + (Network.size() - minsize) + " nodes will be removed.");
 				remove(Network.size() - minsize);
 			}
 			else {
-				//Edit vincent
 				////By vincent System.out.println("DYN: " + this.remove + " nodes will be removed.");
 				remove(this.remove);
 			}

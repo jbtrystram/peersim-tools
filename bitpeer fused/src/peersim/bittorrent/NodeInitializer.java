@@ -87,12 +87,13 @@ public class NodeInitializer{
 	 *	the status of the file and the bandwidth.
 	 *	@param n The node to initialize
 	 */
-	public void initialize(Node n, int type){
+	public void initialize(Node n, int type, boolean mobile){
 		Random rdm = new Random();
 		Node tracker = Network.get(0);
 		BitTorrent p;
 		p = (BitTorrent)n.getProtocol(pid);
         p.setNodeType(type);
+				p.setNodeMobility(mobile);
 		p.setTracker(tracker);
 		p.setThisNodeID(n.getID());
 		p.setThisNodeCoordX(n.getCoordX());

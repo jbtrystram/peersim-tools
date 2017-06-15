@@ -187,6 +187,10 @@ public class BitTorrent implements EDProtocol {
 	 */
 	int maxBandwidth;
 
+	/** the node can move or not **/
+
+	boolean mobile;
+
 	/**
 	 *	Stores the neighbors ordered by ID.
 	 *  @see Element
@@ -428,12 +432,12 @@ public class BitTorrent implements EDProtocol {
 		this.thisNodeID = id;
 	}
 
-	public void setThisNodeCoordX(int id) {
-		this.thisNodeCoordX = id;
+	public void setThisNodeCoordX(int coord) {
+		this.thisNodeCoordX = coord;
 	}
 
-	public void setThisNodeCoordY(int id) {
-		this.thisNodeCoordY = id;
+	public void setThisNodeCoordY(int coord) {
+		this.thisNodeCoordY = coord;
 	}
 	/**
 	 *	Gets the ID of the local node.
@@ -1343,6 +1347,17 @@ public class BitTorrent implements EDProtocol {
 		nodeType = value;
 	}
 
+	/* Set if node is mobile or not
+		TRUE is mobile
+		FALSE is static*/
+	public void setNodeMobility(boolean type){
+		mobile = type;
+	}
+
+	public boolean getNodeMobility(){
+		return mobile;
+	}
+
 	/**
 	 *	Checks if a node is still alive in the simulated network.
 	 *	@param node The node to check
@@ -1452,6 +1467,19 @@ public class BitTorrent implements EDProtocol {
 				e.head60 = 0;
 				sortByPeer();
 
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean moveNeighbor(Node neighbor) {
+
+		if (neighbor == null)
+			return false;
+
+		for (int i=0; i< (nMaxNodes+maxGrowth); i++) {
+			if(cache[i]!=null && cache[i].node!=null && cache[i].node.getID()==neighbor.getID()) {
 				return true;
 			}
 		}

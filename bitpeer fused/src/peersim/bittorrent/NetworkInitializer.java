@@ -101,7 +101,8 @@ public class NetworkInitializer implements Control {
 			((BitTorrent)Network.get(0).getProtocol(pid)).addNeighbor(Network.get(i));
             int value;
 			value = typeSelector(nodeType0,nodeType1,nodeType2,nodeType3);
-			init.initialize(Network.get(i),value);
+			boolean valueMobile = mobileSelector();
+			init.initialize(Network.get(i),value,valueMobile);
 		}
 		for(int i=1; i< Network.size(); i++){
 			Node n = Network.get(i);
@@ -120,6 +121,13 @@ public class NetworkInitializer implements Control {
 			EDSimulator.add(1800000,ev,n,pid);
 		}
 		return true;
+	}
+
+	private boolean mobileSelector(){
+		Random ran = new Random();
+		int value = ran.nextInt(100);
+		if(value>=50) { return true; }
+		else { return false; }
 	}
 
 	private int typeSelector(int n0, int n1, int n2, int n3) {
