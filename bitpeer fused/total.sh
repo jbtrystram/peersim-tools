@@ -2,7 +2,7 @@
 
 make 
 
-make run 2>/dev/null 1>$1
+make run 1>$1
 
 sh cleaner.sh $1
 
