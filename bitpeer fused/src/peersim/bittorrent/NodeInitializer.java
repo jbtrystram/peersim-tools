@@ -98,6 +98,8 @@ public class NodeInitializer{
 		p.setThisNodeID(n.getID());
 		p.setThisNodeCoordX(n.getCoordX());
 		p.setThisNodeCoordY(n.getCoordY());
+		p.setThisNodeSpeedX(n.getSpeedX());
+		p.setThisNodeSpeedY(n.getSpeedY());
 		setFileStatus(p);
 		setBandwidth(p);
 		n.setIndicatorBandwidth(p.nodeType);

@@ -344,6 +344,9 @@ public class BitTorrent implements EDProtocol {
 
 	private int thisNodeCoordY;
 
+	private int thisNodeSpeedX;
+	private int thisNodeSpeedY;
+
 	/**
      *	Number of duplicated requests as specified in the configuration file.
 	 *	@see BitTorrent#PAR_DUP_REQ
@@ -439,6 +442,15 @@ public class BitTorrent implements EDProtocol {
 	public void setThisNodeCoordY(int coord) {
 		this.thisNodeCoordY = coord;
 	}
+
+	public void setThisNodeSpeedX(int coord) {
+		this.thisNodeSpeedX = coord;
+	}
+
+	public void setThisNodeSpeedY(int coord) {
+		this.thisNodeSpeedY = coord;
+	}
+
 	/**
 	 *	Gets the ID of the local node.
 	 *	@return the ID of the local node
@@ -452,6 +464,13 @@ public class BitTorrent implements EDProtocol {
 	}
 	public int getThisNodeCoordY(){
 		return this.thisNodeCoordY;
+	}
+
+	public int getThisNodeSpeedX(){
+		return this.thisNodeSpeedX;
+	}
+	public int getThisNodeSpeedY(){
+		return this.thisNodeSpeedY;
 	}
 
 	public int getThisNodeBandwidth(){
