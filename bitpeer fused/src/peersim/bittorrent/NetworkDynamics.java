@@ -246,8 +246,15 @@ public class NetworkDynamics implements Control {
 		int oldY=((BitTorrent)(Network.get(nodeIndex).getProtocol(pid))).getThisNodeCoordY();
 		int oldX=((BitTorrent)(Network.get(nodeIndex).getProtocol(pid))).getThisNodeCoordX();
 		Random ran = new Random();
-		int newX = ran.nextInt(10) - 5;
-		int newY = ran.nextInt(10) - 5;
+		/* --- Random walk --- */
+		// int newX = ran.nextInt(10) - 5;
+		// int newY = ran.nextInt(10) - 5;
+
+		/* --- Constant speed --- */
+		int newX=((BitTorrent)(Network.get(nodeIndex).getProtocol(pid))).getThisNodeSpeedX();
+		int newY=((BitTorrent)(Network.get(nodeIndex).getProtocol(pid))).getThisNodeSpeedY();
+
+
 		Node nodeToMove = Network.move(nodeIndex,newX,newY);
 		if ( ((BitTorrent)tracker.getProtocol(pid)).moveNeighbor(nodeToMove)){
 			//nodeIndex = CommonState.r.nextInt(Network.size());
