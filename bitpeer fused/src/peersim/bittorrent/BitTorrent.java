@@ -1048,7 +1048,6 @@ public class BitTorrent implements EDProtocol {
 
 				//Premier cas : Si la taille du réseau < peerSetSize
 				if(nNodes <= peersetSize){
-					System.out.println("Nik");
 					//nMaxNodes+maxGrowth est le nombre max de noeuds possible
 					for(int i=0; i<nMaxNodes+maxGrowth;i++){
 
@@ -1141,7 +1140,7 @@ public class BitTorrent implements EDProtocol {
 							// et qu'il est n'est pas trop proche OK
 							if(cache[i].node != null
 							&& cache[i].node.getID()!= sender.getID()
-							//&& ((BitTorrent)(Network.get(i).getProtocol(pid))).getThisNodeBandwidth()==4
+							&& cache[i].node.getIndicatorBandwidth() == 3
 							&& getDistance(cache[i].node,sender)>200){
 								tmp[k]=cache[i];
 								k++;
@@ -1172,6 +1171,11 @@ public class BitTorrent implements EDProtocol {
 						j++;
 					}
 				}
+					/*
+				for(int a=0; a<peersetSize; a++){
+					System.out.println("tmp["+a+"]="+tmp[a].node.getID()+" avec indicatorBandwidth="+tmp[a].node.getIndicatorBandwidth());
+				}
+				*/
 
 				//Opération d'envoi de tmp et du PEERSET au sender
 				ev = new PeerSetMsg(PEERSET, tmp, node);

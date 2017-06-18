@@ -100,6 +100,8 @@ public class NodeInitializer{
 		p.setThisNodeCoordY(n.getCoordY());
 		setFileStatus(p);
 		setBandwidth(p);
+		n.setIndicatorBandwidth(p.nodeType);
+		//n.setIndicatorEnergy()
 	}
 
 	/**
