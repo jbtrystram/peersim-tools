@@ -5,10 +5,12 @@ sed -i '4s/.*/simulation.endtime '$2'/' config-BitTorrent.cfg
 
 make
 
-make run 1>$1
+make run 1>./output/scripts/webm/$1
 
-sh cleaner.sh $1
+sh ./output/scripts/webm/cleaner.sh ./output/scripts/webm/$1
 
-gnuplot -e "datafile='$1'"  Map2Commandes.gnu
+gnuplot -e "datafile='./output/scripts/webm/$1'"  ./output/scripts/webm/Map2Commandes.gnu
 
 sh mkwebm.sh $1 $2
+rm *.png
+
