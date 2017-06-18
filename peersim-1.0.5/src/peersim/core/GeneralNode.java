@@ -60,6 +60,9 @@ private long ID;
 
 private int coordX;
 private int coordY;
+
+private int indicatorEnergy;
+private int indicatorBandwidth;
 // ================ constructor and initialization =================
 // =================================================================
 
@@ -186,6 +189,12 @@ public int getCoordY() { return coordY; }
 
 public void setCoordY(int coordY) { this.coordY = coordY; }
 public void setCoordX(int coordX) { this.coordX = coordX; }
+
+public int getIndicatorEnergy() { return this.indicatorEnergy; }
+public int getIndicatorBandwidth() { return this.indicatorBandwidth; }
+
+public void setIndicatorEnergy(int val) { this.indicatorEnergy=val; }
+public void setIndicatorBandwidth(int val) { this.indicatorBandwidth=val; }
 
 //------------------------------------------------------------------
 

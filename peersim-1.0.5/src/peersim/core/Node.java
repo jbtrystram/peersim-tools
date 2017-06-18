@@ -84,4 +84,10 @@ public int getCoordY();
 
 public void setCoordX(int x);
 public void setCoordY(int y);
+
+public int getIndicatorEnergy();
+public int getIndicatorBandwidth();
+
+public void setIndicatorEnergy(int val);
+public void setIndicatorBandwidth(int val);
 }
