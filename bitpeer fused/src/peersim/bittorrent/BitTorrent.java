@@ -454,6 +454,10 @@ public class BitTorrent implements EDProtocol {
 		return this.thisNodeCoordY;
 	}
 
+	public int getThisNodeBandwidth(){
+		return this.nodeType;
+	}
+
 	/**
 	 *	Gets the file status of the local node.
 	 *	@return the file status of the local node
@@ -1027,34 +1031,44 @@ public class BitTorrent implements EDProtocol {
 
 			case TRACKER: // TRACKER message
 			{
-
-				int j=0;
+				//On récupère le node qui envoie le message TRACKER
 				Node sender = ((SimpleMsg)event).getSender();
-				////By vincent System.out.println("process, tracker: sender is "+sender.getID()+", local is "+node.getID());
+				//By vincent System.out.println("process, tracker: sender is "+sender.getID()+", local is "+node.getID());
+
+				//Si le sender est mort on sort
 				if(!alive(sender))
 					return;
+
+				//On créé le tableau de voisin qu'on va envoyer à sender
 				Neighbor tmp[] = new Neighbor[peersetSize];
+				int j=0;
 				int k=0;
-				//Vincent, ma théorie c'est que c'est ici qu'il faut agir sur le peerset envoyé
-				//au noeud.
 				int indexDistMax=0;
 				double distMax=0;
 
-				//Premier cas : Si le nombre de voisins dispo est inférieur au peerSetSize
+				//Premier cas : Si la taille du réseau < peerSetSize
 				if(nNodes <= peersetSize){
+					System.out.println("Nik");
 					//nMaxNodes+maxGrowth est le nombre max de noeuds possible
 					for(int i=0; i<nMaxNodes+maxGrowth;i++){
+
+						//On s'assure que le noeud existe
+						//On exclut le sender de la recherche
 						if(cache[i].node != null && cache[i].node.getID()!= sender.getID()){
-							//Soit le tmp n'est pas plein
+
+							//SOIT le tmp n'est pas plein
 							if(k<peersetSize)
 							{
+								//Donc on remplit le tableau avec les noeuds
 								tmp[k]=cache[i];
 								k++;
+
+								//Et si le noeud ajouté est plus loin que l'ancien plus loin, on le dit
 								if(getDistance(cache[i].node, sender)>distMax){
 									indexDistMax=k;
 									distMax=getDistance(cache[i].node, sender);
 								}
-							//Soit il est plein et on doit garder les noeuds les plus proches
+							//SOIT tmp est plein et on doit garder les noeuds les plus proches
 							}else{
 								if(getDistance(cache[i].node, sender)>distMax){
 									distMax=getDistance(cache[i].node, sender);
@@ -1084,13 +1098,21 @@ public class BitTorrent implements EDProtocol {
 					return;
 				}
 
-				//Si le nombre de voisin n'est pas inférieur au Peersetsize:
+				//Si la taille de réseau >= au Peersetsize:
+				//SANS STRATEGIE
 
-				//Tant que le peerset n'est pas fini
+				//Tant que le peerset n'est pas rempli
 				while(j < peersetSize){
+
+					//On tire un i aléatoire
 					int i = CommonState.r.nextInt(nMaxNodes+maxGrowth);
+
+					//On parcourt 0->i
 					for (int z=0; z<j; z++){
-						//Si le noeud est nul ou déjà dans le cache ou qu'il s'agit du sender, on retire un aléatoire
+						//Si le noeud est null
+						//ou déjà dans le cache
+						//ou qu'il s'agit du sender
+						//	-> on retire un aléatoire
 						if(cache[i].node==null || tmp[z].node.getID() == cache[i].node.getID() || cache[i].node.getID() == sender.getID()){
 							z=0;
 							i= CommonState.r.nextInt(nMaxNodes+maxGrowth);
@@ -1101,6 +1123,42 @@ public class BitTorrent implements EDProtocol {
 						j++;
 					}
 				}
+				/*
+				//AVEC STRATEGIE
+				//On remplit 20% du peerSetSize avec des noeuds puissants et lointains
+				int peersetSize10 = (int) (peersetSize / 5);
+				k=0;
+				distMax=0;
+				for(int i=0; i<nMaxNodes+maxGrowth;i++){
+
+						//SOIT les 10% ne sont pas plein
+						if(k<peersetSize10)
+						{
+							//Si le noeud n'est pas null OK
+							// et qu'il n'est pas le sender OK
+							// et qu'il a une grande BP OK
+							// et qu'il a une grande energie
+							// et qu'il est n'est pas trop proche OK
+							if(cache[i].node != null
+									&& cache[i].node.getID()!= sender.getID()
+									//&& ((BitTorrent)(Network.get(i).getProtocol(pid))).getThisNodeBandwidth()==4
+									&& getDistance(cache[i].node,sender)>200){
+										tmp[k]=cache[i];
+										k++;
+									}
+						//SOIT 10% plein et on doit garder les noeuds les plus proches
+						}else{
+							if(getDistance(cache[i].node, sender)>distMax){
+								distMax=getDistance(cache[i].node, sender);
+								tmp[indexDistMax]=cache[i];
+							}
+						}
+				}
+				for(int a = 0; a < peersetSize; a++){
+					System.out.println("tmp["+a+"]= "+tmp[a]);
+				}
+				*/
+				//Opération d'envoi de tmp et du PEERSET au sender
 				ev = new PeerSetMsg(PEERSET, tmp, node);
 				latency = ((Transport)node.getProtocol(tid)).getLatency(node, sender);
 				EDSimulator.add(latency,ev,sender,pid);
