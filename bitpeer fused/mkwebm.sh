@@ -1,7 +1,8 @@
-#!/bin/bash 
+#!/bin/bash
 #
 #Installer les packages : mjpegtools et vpx-tools
 #
+
 
 for a in *.png; do
         b=$(printf %04d.png ${a%.png})
