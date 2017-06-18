@@ -61,6 +61,10 @@ private long ID;
 private int coordX;
 private int coordY;
 
+// initial speed allocated to the node
+private int speedX;
+private int speedY;
+
 private int indicatorEnergy;
 private int indicatorBandwidth;
 // ================ constructor and initialization =================
@@ -77,8 +81,13 @@ public GeneralNode(String prefix) {
 	String[] names = Configuration.getNames(PAR_PROT);
 	CommonState.setNode(this);
 	ID=nextID();
+
 	coordX=newCoord();
 	coordY=newCoord();
+	// initialize speed as well
+	speedX = newSpeed();
+	speedY = newSpeed();
+
 	protocol = new Protocol[names.length];
 	for (int i=0; i < names.length; i++) {
 		CommonState.setPid(i);
@@ -101,6 +110,9 @@ public Object clone() {
 	result.ID=nextID();
 	result.coordX=newCoord();
 	result.coordY=newCoord();
+	result.speedX = newSpeed();
+	result.speedY = newSpeed();
+
 	for(int i=0; i<protocol.length; ++i) {
 		CommonState.setPid(i);
 		result.protocol[i] = (Protocol)protocol[i].clone();
@@ -119,6 +131,13 @@ private long nextID() {
 private int newCoord() {
 	Random randomGen = new Random();
 	return randomGen.nextInt(1000);
+}
+
+/** Returns a random speed with lower bounds than coord */
+private int newSpeed() {
+	Random randomGen = new Random();
+	int range = 30;
+	return randomGen.nextInt(range) - (range / 2);	// needs to be unhardcoded later
 }
 
 // =============== public methods ==================================
@@ -187,8 +206,14 @@ public long getID() { return ID; }
 public int getCoordX() { return coordX; }
 public int getCoordY() { return coordY; }
 
+public int getSpeedX(){ return speedX; }
+public int getSpeedY(){ return speedY; }
+
 public void setCoordY(int coordY) { this.coordY = coordY; }
 public void setCoordX(int coordX) { this.coordX = coordX; }
+
+public void setSpeedX(int x) {this.speedX = x; }
+public void setSpeedY(int x) {this.speedY = x; }
 
 public int getIndicatorEnergy() { return this.indicatorEnergy; }
 public int getIndicatorBandwidth() { return this.indicatorBandwidth; }
