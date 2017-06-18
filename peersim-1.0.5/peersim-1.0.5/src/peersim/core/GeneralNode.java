@@ -65,6 +65,7 @@ private int coordY;
 private int speedX;
 private int speedY;
 
+/* for now 0 = can sleep for energy; 1 = cannot sleep*/
 private int indicatorEnergy;
 private int indicatorBandwidth;
 // ================ constructor and initialization =================

@@ -1159,7 +1159,8 @@ public class BitTorrent implements EDProtocol {
 							// et qu'il est n'est pas trop proche OK
 							if(cache[i].node != null
 							&& cache[i].node.getID()!= sender.getID()
-							&& cache[i].node.getIndicatorBandwidth() == 3
+							&& (cache[i].node.getIndicatorBandwidth() == 3
+							|| cache[i].node.getIndicatorEnergy() == 1 )
 							&& getDistance(cache[i].node,sender)>200){
 								tmp[k]=cache[i];
 								k++;

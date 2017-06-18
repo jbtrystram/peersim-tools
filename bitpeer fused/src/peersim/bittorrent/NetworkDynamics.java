@@ -310,9 +310,12 @@ public class NetworkDynamics implements Control {
 			}
 		} else {
 			// find a node and randomly toggle its state between OK and DOWN
+			// only switch a node that has energy
 			int toggledNode = CommonState.r.nextInt(Network.size());
 			if(Network.node[toggledNode] != null
-			&& Network.node[toggledNode].getFailState() != Fallible.DEAD){
+			&& Network.node[toggledNode].getFailState() != Fallible.DEAD
+			// && Network.node[toggledNode].getIndicatorEnergy() == 0
+			){
 				Network.node[toggledNode].setFailState(
 					Network.node[toggledNode].getFailState() == Fallible.OK ? Fallible.DOWN : Fallible.OK
 				);

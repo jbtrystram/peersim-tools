@@ -103,7 +103,8 @@ public class NodeInitializer{
 		setFileStatus(p);
 		setBandwidth(p);
 		n.setIndicatorBandwidth(p.nodeType);
-		//n.setIndicatorEnergy()
+		// set a given amount of nodes to have energy
+		n.setIndicatorEnergy(rdm.nextInt(2));// have 0 or 1
 	}
 
 	/**
