@@ -14,3 +14,5 @@ gnuplot -e "datafile='./output/scripts/webm/$1'"  ./output/scripts/webm/Map2Comm
 sh mkwebm.sh $1 $2
 rm *.png
 
+
+sh mkhistogram.sh $1
