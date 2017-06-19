@@ -15,11 +15,10 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
-
+		
 package peersim.core;
 
 import peersim.config.*;
-import java.util.Random;
 
 /**
 * This is the default {@link Node} class that is used to compose the
@@ -58,16 +57,6 @@ protected int failstate = Fallible.OK;
 */
 private long ID;
 
-private int coordX;
-private int coordY;
-
-// initial speed allocated to the node
-private int speedX;
-private int speedY;
-
-/* for now 0 = can sleep for energy; 1 = cannot sleep*/
-private int indicatorEnergy;
-private int indicatorBandwidth;
 // ================ constructor and initialization =================
 // =================================================================
 
@@ -78,23 +67,16 @@ private int indicatorBandwidth;
 * the configuration.
 */
 public GeneralNode(String prefix) {
-
+	
 	String[] names = Configuration.getNames(PAR_PROT);
 	CommonState.setNode(this);
 	ID=nextID();
-
-	coordX=newCoord();
-	coordY=newCoord();
-	// initialize speed as well
-	speedX = newSpeed();
-	speedY = newSpeed();
-
 	protocol = new Protocol[names.length];
 	for (int i=0; i < names.length; i++) {
 		CommonState.setPid(i);
-		Protocol p = (Protocol)
+		Protocol p = (Protocol) 
 			Configuration.getInstance(names[i]);
-		protocol[i] = p;
+		protocol[i] = p; 
 	}
 }
 
@@ -102,18 +84,13 @@ public GeneralNode(String prefix) {
 // -----------------------------------------------------------------
 
 public Object clone() {
-
+	
 	GeneralNode result = null;
 	try { result=(GeneralNode)super.clone(); }
 	catch( CloneNotSupportedException e ) {} // never happens
 	result.protocol = new Protocol[protocol.length];
 	CommonState.setNode(result);
 	result.ID=nextID();
-	result.coordX=newCoord();
-	result.coordY=newCoord();
-	result.speedX = newSpeed();
-	result.speedY = newSpeed();
-
 	for(int i=0; i<protocol.length; ++i) {
 		CommonState.setPid(i);
 		result.protocol[i] = (Protocol)protocol[i].clone();
@@ -125,20 +102,8 @@ public Object clone() {
 
 /** returns the next unique ID */
 private long nextID() {
+
 	return counterID++;
-}
-
-/** returns a random coordinate */
-private int newCoord() {
-	Random randomGen = new Random();
-	return randomGen.nextInt(1000);
-}
-
-/** Returns a random speed with lower bounds than coord */
-private int newSpeed() {
-	Random randomGen = new Random();
-	int range = 30;
-	return randomGen.nextInt(range) - (range / 2);	// needs to be unhardcoded later
 }
 
 // =============== public methods ==================================
@@ -146,7 +111,7 @@ private int newSpeed() {
 
 
 public void setFailState(int failState) {
-
+	
 	// after a node is dead, all operations on it are errors by definition
 	if(failstate==DEAD && failState!=DEAD) throw new IllegalStateException(
 		"Cannot change fail state: node is already DEAD");
@@ -195,7 +160,7 @@ public int getIndex() { return index; }
 //------------------------------------------------------------------
 
 public void setIndex(int index) { this.index = index; }
-
+	
 //------------------------------------------------------------------
 
 /**
@@ -204,27 +169,9 @@ public void setIndex(int index) { this.index = index; }
 */
 public long getID() { return ID; }
 
-public int getCoordX() { return coordX; }
-public int getCoordY() { return coordY; }
-
-public int getSpeedX(){ return speedX; }
-public int getSpeedY(){ return speedY; }
-
-public void setCoordY(int coordY) { this.coordY = coordY; }
-public void setCoordX(int coordX) { this.coordX = coordX; }
-
-public void setSpeedX(int x) {this.speedX = x; }
-public void setSpeedY(int x) {this.speedY = x; }
-
-public int getIndicatorEnergy() { return this.indicatorEnergy; }
-public int getIndicatorBandwidth() { return this.indicatorBandwidth; }
-
-public void setIndicatorEnergy(int val) { this.indicatorEnergy=val; }
-public void setIndicatorBandwidth(int val) { this.indicatorBandwidth=val; }
-
 //------------------------------------------------------------------
 
-public String toString()
+public String toString() 
 {
 	StringBuffer buffer = new StringBuffer();
 	buffer.append("ID: "+ID+" index: "+index+"\n");
@@ -241,3 +188,5 @@ public String toString()
 public int hashCode() { return (int)getID(); }
 
 }
+
+

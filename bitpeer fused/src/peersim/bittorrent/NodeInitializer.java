@@ -104,7 +104,7 @@ public class NodeInitializer{
 		setBandwidth(p);
 		n.setIndicatorBandwidth(p.nodeType);
 		// set a given amount of nodes to have energy
-		n.setIndicatorEnergy(rdm.nextInt(2));// have 0 or 1
+		n.setIndicatorEnergy(1);// have 0 or 1
 	}
 
 	/**

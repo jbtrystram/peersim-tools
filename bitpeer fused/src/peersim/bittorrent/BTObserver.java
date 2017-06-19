@@ -37,7 +37,7 @@ import peersim.util.*;
 	 *	The protocol to operate on.
 	 *	@config
 	 */
-	private static final String PAR_PROT="protocol";
+	private static final String PAR_PROT = "protocol";
 
 	/**
 	 *	Protocol identifier, obtained from config property

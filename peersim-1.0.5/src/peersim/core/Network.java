@@ -15,7 +15,7 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
-
+		
 package peersim.core;
 
 import peersim.config.Configuration;
@@ -84,7 +84,7 @@ private static final String PAR_SIZE = "network.size";
 * it is necessary to know that the actual node set is only the first
 * {@link #size()} items of the array.
 */
-public static Node[] node = null;
+static Node[] node = null;
 
 /**
 * Actual size of the network.
@@ -116,14 +116,14 @@ public static void reset() {
 		prototype = null;
 		node = null;
 	}
-
+	
 	len = Configuration.getInt(PAR_SIZE);
 	int maxlen = Configuration.getInt(PAR_MAXSIZE,len);
 	if( maxlen < len ) throw new IllegalArgumentException(
 			PAR_MAXSIZE+" is less than "+PAR_SIZE);
 
 	node = new Node[maxlen];
-
+	
 	// creating prototype node
 	Node tmp = null;
 	if (!Configuration.contains(PAR_NODE))
@@ -196,7 +196,7 @@ public static int getCapacity() { return node.length; }
 * capacity of the internal array is increased.
 */
 public static void add( Node n ) {
-
+	
 	if(len==node.length) setCapacity(3*node.length/2+1);
 	node[len] = n;
 	n.setIndex(len);
@@ -213,7 +213,7 @@ public static void add( Node n ) {
 * The maximal valid index is {@link #size()}.
 */
 public static Node get( int index ) {
-
+	
 	return node[index];
 }
 
@@ -224,7 +224,7 @@ public static Node get( int index ) {
 * It also sets the fail state of the node to {@link Fallible#DEAD}.
 */
 public static Node remove() {
-
+	
 	Node n = node[len-1]; // if len was zero this throws and exception
 	node[len-1]=null;
 	len--;
@@ -243,7 +243,7 @@ public static Node remove() {
 * last node is moved to the given position and will get index i.
 */
 public static Node remove(int i) {
-
+	
 	if( i<0 || i>=len ) throw new IndexOutOfBoundsException(""+i);
 	swap(i,len-1);
 	return remove();
@@ -255,7 +255,7 @@ public static Node remove(int i) {
 * Swaps the two nodes at the given indexes.
 */
 public static void swap(int i, int j) {
-
+	
 	Node n = node[i];
 	node[i] = node[j];
 	node[j] = n;
@@ -264,32 +264,12 @@ public static void swap(int i, int j) {
 }
 
 // ------------------------------------------------------------------
-// ------------------------------------------------------------------
 
-/**
-* The node with the given index is moved. Returns the moved node.
-* It also sets the fail state of the node to {@link Fallible#DEAD}.
-* <p>Look out: the index of the other nodes will not change (the right
-* hand side of the list is not shifted to the left) except that of the last
-* node. Only the
-* last node is moved to the given position and will get index i.
-*/
-public static Node move(int i, int x, int y ) {
-	//System.out.println("Avant: "+node[i].getCoordX());
-	if( i<0 || i>=len ) throw new IndexOutOfBoundsException(""+i);
-	node[i].setCoordX(node[i].getCoordX()+x);
-	node[i].setCoordY(node[i].getCoordY()+y);
-	//System.out.println("Après: "+node[i].getCoordX());
-
-	return node[i];
-}
-
-// ------------------------------------------------------------------
 /**
 * Shuffles the node array. The index of each node is updated accordingly.
 */
 public static void shuffle() {
-
+	
 	for(int i=len; i>1; i--) swap(i-1, CommonState.r.nextInt(i));
 }
 
@@ -301,7 +281,7 @@ public static void shuffle() {
 * natural order of the nodes is used.
 */
 public static void sort(Comparator<? super Node> c) {
-
+	
 	Arrays.sort(node,0,len,c);
 	for(int i=0; i<len; i++) node[i].setIndex(i);
 }
@@ -309,7 +289,7 @@ public static void sort(Comparator<? super Node> c) {
 // ------------------------------------------------------------------
 
 public static void test() {
-
+	
 	System.err.println("number of nodes = "+len);
 	System.err.println("capacity (max number of nodes) = "+node.length);
 	for(int i=0; i<len; ++i)
@@ -317,7 +297,7 @@ public static void test() {
 		System.err.println("node["+i+"]");
 		System.err.println(node[i].toString());
 	}
-
+	
 	if(prototype==null) return;
 	for(int i=0; i<prototype.protocolSize(); ++i)
 	{
@@ -328,3 +308,4 @@ public static void test() {
 }
 
 }
+

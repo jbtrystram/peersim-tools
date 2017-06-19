@@ -271,15 +271,16 @@ public class NetworkDynamics implements Control {
 	 * Calls {@link #add(int)} or {@link #remove} with the parameters defined by the
 	 * configuration.
 	 * @return always false
+	 	NEVER CALLED IN TEH DEFAULT MODE
 	 */
 	public boolean execute(){
-		int choice = (CommonState.r.nextInt(11)); // 0 or 1 or more
+		int choice = (CommonState.r.nextInt(2)); // 0 or 1 or more
 
-		for (int j=0; j<=Network.size()-1;j++){
-			if(((BitTorrent)(Network.get(j).getProtocol(pid))).getNodeMobility()){
-				move(j);
-			}
-		}
+		// for (int j=0; j<=Network.size()-1;j++){
+		// 	if(((BitTorrent)(Network.get(j).getProtocol(pid))).getNodeMobility()){
+		// 		move(j);
+		// 	}
+		// }
 
 		// adding new nodes
 		if (choice == 0) {
