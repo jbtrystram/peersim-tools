@@ -991,6 +991,10 @@ public class BitTorrent implements EDProtocol {
 						//edit vincent
 						////By vincent System.out.println("FILE COMPLETED for peer "+node.getID());
 						this.peerStatus = 1;
+						//By Adrien : added free-riders
+						if((CommonState.r.nextInt(10)) == 0) {
+							Network.remove((int)node.getID());
+						}
 					}
 
 					/*	I set the currentPiece to the lastInterested. Then I extract

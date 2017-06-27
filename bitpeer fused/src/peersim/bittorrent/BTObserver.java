@@ -119,7 +119,8 @@ import peersim.util.*;
         mypeerStatus = Network.get(i).getFailState() == Fallible.DOWN ? 2 : mypeerStatus;
 
         System.out.println(
-        ((BitTorrent)(Network.get(i).getProtocol(pid))).getThisNodeCoordX()
+        CommonState.getTime()
+        +" "+((BitTorrent)(Network.get(i).getProtocol(pid))).getThisNodeCoordX()
         +" "+((BitTorrent)(Network.get(i).getProtocol(pid))).getThisNodeCoordY()
         +" "+numberOfCompletedPieces
         + " " + mypeerStatus);
