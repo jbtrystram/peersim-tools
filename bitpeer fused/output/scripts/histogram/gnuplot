@@ -1,5 +1,0 @@
-set title 'Progress in the end'
-set label 'File complete in 1 nodes' at graph 0.5,0.9 center font 'Verdana,20'
-set xrange [0:100]
-set yrange [0:500]
-plot 'data' with boxes linecolor rgb '#2730AE'
