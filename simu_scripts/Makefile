@@ -10,18 +10,19 @@ CONFIG = "./config-BitTorrent.cfg"
 
 LIB_JARS=`find -L lib/ -name "*.jar" | tr "[:space:]" :`
 
+try: 
+	java -Xms512m -Xmx2048m -cp $(LIB_JARS) peersim.Simulator $(CONFIG)
+
 run:
 	mkdir $(FOLDER)
-	java -cp $(LIB_JARS) peersim.Simulator config-BitTorrent.cfg > $(TEMPFILE)
-	echo "results stored in "+$(TEMPFILE)
+	 java -Xms512m -Xmx2048m -cp $(LIB_JARS) peersim.Simulator $(CONFIG) > $(TEMPFILE)
 
 cleanfile:
 	head -n -1 $(TEMPFILE) > $(TEMPFILE).tmp; mv $(TEMPFILE).tmp $(TEMPFILE)
 	tail -n +2 $(TEMPFILE) > $(TEMPFILE).tmp; mv $(TEMPFILE).tmp $(TEMPFILE)
 
 gnuplot: cleanfile
-	mv $(TEMPFILE) $(TEMPDIR)/
-	cd $(TEMPDIR); gnuplot -e \"datafile=\'$(TEMPFILE)\'\" ../gnuplot_scripts/Map2Commandes.gnu
+	cd $(FOLDER); gnuplot -e datafile="'tmp.txt'" ../../gnuplot_scripts/Map2Commandes.gnu
 	
 gif: gnuplot
 	cd $(TEMPDIR); for a in *.png; do
