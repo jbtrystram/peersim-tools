@@ -23,7 +23,7 @@ set ylabel "Y"
 set xrange [0:1000]
 set yrange [0:1000]
 set cbrange[0:400]
-set terminal png background rgb '#404040'
+set terminal png background rgb '#FFFFFF'
 set palette rgb -21,-22,-23;
 
 NMAX=STATS_blocks
