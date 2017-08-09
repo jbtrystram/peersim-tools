@@ -31,3 +31,9 @@ clean:
 
 
 wrap: run gif
+
+tar: 
+	cp $(CONFIG) $(FOLDER)
+	tar -czf `date "+%Y-%m-%d_%H-%M"`.tar.gz $(FOLDER)
+
+archive: tar clean
