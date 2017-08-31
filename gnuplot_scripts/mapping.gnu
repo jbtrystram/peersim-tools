@@ -6,14 +6,15 @@
 #... puis sauter deux lignes
 
 reset
-stats datafile
+stats datafile using 5
 
 set title "Network instant t"
 set xlabel "X"
 set ylabel "Y"
 set xrange [0:1000]
 set yrange [0:1000]
-set cbrange[0:400]
+set cbrange[0:STATS_max]
+
 set terminal png background rgb '#FFFFFF'
 
 # palette from 'parula.pal'
