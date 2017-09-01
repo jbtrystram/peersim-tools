@@ -23,14 +23,14 @@ gnuplot:
 gif: gnuplot
 	cd $(FOLDER); convert -delay 10 -loop 0 *.png ../$(TEMPFILE).gif
 
-video: gif
-	#todo
+histogram:
+	cd $(FOLDER); python ../../gnuplot_scripts/hysto.py tmp.txt
 
 clean: 
 	rm -rf $(FOLDER)
 
 
-wrap: run gif
+wrap: run gif histogram
 
 tar: 
 	cp $(CONFIG) $(FOLDER)
